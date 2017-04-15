@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.linearlayout_byhand);
-        Button dialButton = (Button) findViewById(R.id.b_dial);
+        setContentView(R.layout.relativelayout_byhand);
+        Button dialButton = (Button) findViewById(R.id.bt);
 //        Button otherButton = (Button) findViewById(R.id.button2);
-        TextView textView = (TextView) findViewById(R.id.tv_number);
-        editText = (EditText) findViewById(R.id.et_number);
+        TextView textView = (TextView) findViewById(R.id.tv);
+        editText = (EditText) findViewById(R.id.et);
 
 //        b.setOnClickListener(new MyClickListener());
         dialButton.setOnClickListener(this);
@@ -35,10 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.b_dial:
+            case R.id.bt:
                 call();
-                break;
-            case R.id.button2:
                 break;
             default:
                 break;
