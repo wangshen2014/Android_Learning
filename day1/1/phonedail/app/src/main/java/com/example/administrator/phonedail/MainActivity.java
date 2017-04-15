@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity{
     private static String TAG = "MainActivity";
     private EditText editText;
 
@@ -26,21 +26,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editText = (EditText) findViewById(R.id.editText);
 
 //        b.setOnClickListener(new MyClickListener());
-        dialButton.setOnClickListener(this);
+//        dialButton.setOnClickListener(this);
 
     }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.button:
-                call();
-                break;
-            case R.id.button2:
-                break;
-            default:
-                break;
-        }
-   }
+    public void onClickPro(View v){
+        call();
+    }
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()){
+//            case R.id.button:
+////                call();
+//                break;
+//            case R.id.button2:
+//                break;
+//            default:
+//                break;
+//        }
+//   }
 
 private void call(){
     Editable text = editText.getText();
