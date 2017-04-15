@@ -12,11 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
-
 public class MainActivity extends AppCompatActivity {
     private static String TAG = "MainActivity";
     private EditText editText;
@@ -29,23 +24,36 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.textView);
         editText = (EditText) findViewById(R.id.editText);
 
-        b.setOnClickListener(new MyClickListener());
+//        b.setOnClickListener(new MyClickListener());
+        b.setOnClickListener(new View.OnClickListener() {
+             @Override
+            public void onClick(View v) {
+                Editable text = editText.getText();
+                String s  = text.toString().trim();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:"+s));
+                startActivity(intent);
 
-    }
-
-
-
-    private class MyClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View view){
-            Editable text = editText.getText();
-            String s  = text.toString().trim();
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_CALL);
-            intent.setData(Uri.parse("tel:"+s));
-            startActivity(intent);
-
-            Log.i(TAG,"text.toString()" + s);
+                Log.i(TAG,"text.toString()" + s);
+            }
         }
+        );
     }
+
+
+
+//    private class MyClickListener implements View.OnClickListener {
+//        @Override
+//        public void onClick(View view){
+//            Editable text = editText.getText();
+//            String s  = text.toString().trim();
+//            Intent intent = new Intent();
+//            intent.setAction(Intent.ACTION_CALL);
+//            intent.setData(Uri.parse("tel:"+s));
+//            startActivity(intent);
+//
+//            Log.i(TAG,"text.toString()" + s);
+//        }
+//    }
 }
