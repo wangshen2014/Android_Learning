@@ -12,38 +12,38 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static String TAG = "MainActivity";
     private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button dialButton = (Button) findViewById(R.id.button);
-        Button otherButton = (Button) findViewById(R.id.button2);
-        TextView textView = (TextView) findViewById(R.id.textView);
-        editText = (EditText) findViewById(R.id.editText);
+        setContentView(R.layout.linearlayout_byhand);
+        Button dialButton = (Button) findViewById(R.id.b_dial);
+//        Button otherButton = (Button) findViewById(R.id.button2);
+        TextView textView = (TextView) findViewById(R.id.tv_number);
+        editText = (EditText) findViewById(R.id.et_number);
 
 //        b.setOnClickListener(new MyClickListener());
-//        dialButton.setOnClickListener(this);
+        dialButton.setOnClickListener(this);
 
     }
     public void onClickPro(View v){
         call();
     }
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()){
-//            case R.id.button:
-////                call();
-//                break;
-//            case R.id.button2:
-//                break;
-//            default:
-//                break;
-//        }
-//   }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.b_dial:
+                call();
+                break;
+            case R.id.button2:
+                break;
+            default:
+                break;
+        }
+   }
 
 private void call(){
     Editable text = editText.getText();

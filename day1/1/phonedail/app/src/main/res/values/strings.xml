@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">phonedail</string>
+    <string name="tv_name">请输入手机号码</string>
+    <string name="dial">拨打</string>
 </resources>
