@@ -43,4 +43,15 @@
         android:layout_marginTop="30dp"
         android:id="@+id/button" />
 
+    <Button
+        android:text="其他"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button"
+        android:layout_toRightOf="@+id/button"
+        android:layout_toEndOf="@+id/button"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:id="@+id/button2" />
+
 </RelativeLayout>

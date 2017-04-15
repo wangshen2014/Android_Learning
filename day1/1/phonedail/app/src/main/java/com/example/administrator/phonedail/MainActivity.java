@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static String TAG = "MainActivity";
     private EditText editText;
 
@@ -20,29 +20,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button b = (Button) findViewById(R.id.button);
+        Button dialButton = (Button) findViewById(R.id.button);
+        Button otherButton = (Button) findViewById(R.id.button2);
         TextView textView = (TextView) findViewById(R.id.textView);
         editText = (EditText) findViewById(R.id.editText);
 
 //        b.setOnClickListener(new MyClickListener());
-        b.setOnClickListener(new View.OnClickListener() {
-             @Override
-            public void onClick(View v) {
-                Editable text = editText.getText();
-                String s  = text.toString().trim();
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:"+s));
-                startActivity(intent);
+        dialButton.setOnClickListener(this);
 
-                Log.i(TAG,"text.toString()" + s);
-            }
-        }
-        );
     }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button:
+                call();
+                break;
+            case R.id.button2:
+                break;
+            default:
+                break;
+        }
+   }
 
-
-
+private void call(){
+    Editable text = editText.getText();
+    String s  = text.toString().trim();
+    Intent intent = new Intent();
+    intent.setAction(Intent.ACTION_CALL);
+    intent.setData(Uri.parse("tel:"+s));
+    startActivity(intent);
+    Log.i(TAG,"text.toString()" + s);
+}
 //    private class MyClickListener implements View.OnClickListener {
 //        @Override
 //        public void onClick(View view){
