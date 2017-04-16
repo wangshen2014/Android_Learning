@@ -1,5 +1,6 @@
 package com.example.administrator.login;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -27,11 +28,12 @@ public class Userinfo {
         mPasswd = passwd;
     }
 
-    public static boolean saveUserInfo(String name,String passwd,String isChecked) {
+    public static boolean saveUserInfo(Context context, String name, String passwd, String isChecked) {
         String result = name + "##" + passwd + "##" + isChecked;
         try {
-            File file = new File("/data/data/com.example.administrator.login/info.txt");
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
+//            File file = new File("/data/data/com.example.administrator.login/info.txt");
+//            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            FileOutputStream fileOutputStream = context.openFileOutput("info2.txt",0);
             fileOutputStream.write(result.getBytes());
             fileOutputStream.flush();
             fileOutputStream.close();
@@ -43,10 +45,12 @@ public class Userinfo {
 
         }
     }
-    public static Map<String , String > getUserinfo(){
+    public static Map<String , String > getUserinfo(Context context){
         try {
-            File file = new File("/data/data/com.example.administrator.login/info.txt");
-            FileInputStream fileInputStream = new FileInputStream(file);
+//            File file = new File("/data/data/com.example.administrator.login/info.txt");
+//            FileInputStream fileInputStream = new FileInputStream(file);
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
+            FileInputStream fileInputStream = context.openFileInput("info2.txt");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
             String result = bufferedReader.readLine();
             if (null == result){

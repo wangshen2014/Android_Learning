@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         editTextName = (EditText) findViewById(R.id.et_username);
         editTextPasswd = (EditText) findViewById(R.id.et_passwd);
         checkBox = (CheckBox) findViewById(R.id.checkbox_rem);
-        Map<String,String> hashMap = Userinfo.getUserinfo();
+        Map<String,String> hashMap = Userinfo.getUserinfo(MainActivity.this);
         if(hashMap != null){
             editTextName.setText(hashMap.get("name"));
             editTextPasswd.setText(hashMap.get("passwd"));
@@ -51,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(checkBox.isChecked()){
                     Log.i(TAG,"SAVE:" + name + " " + passwd + " " + isChecked);
-                    Userinfo.saveUserInfo(name,passwd,isChecked);
+                    Userinfo.saveUserInfo(MainActivity.this,name,passwd,isChecked);
                     Toast.makeText(MainActivity.this,"saved",Toast.LENGTH_LONG).show();
                 }else{
-                        File file = new File("/data/data/com.example.administrator.login/info.txt");
+                    File file = new File(getApplicationContext().getFilesDir(),"info2.txt");
                         if(file.exists()){
                             file.delete();
                             Toast.makeText(MainActivity.this,"deleting",Toast.LENGTH_SHORT).show();
