@@ -1,5 +1,6 @@
 package com.example.administrator.login;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,8 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
@@ -29,15 +28,10 @@ public class MainActivity extends AppCompatActivity {
         editTextName = (EditText) findViewById(R.id.et_username);
         editTextPasswd = (EditText) findViewById(R.id.et_passwd);
         checkBox = (CheckBox) findViewById(R.id.checkbox_rem);
-        Map<String,String> hashMap = Userinfo.getUserinfo(MainActivity.this);
-        if(hashMap != null){
-            editTextName.setText(hashMap.get("name"));
-            editTextPasswd.setText(hashMap.get("passwd"));
-            Log.i(TAG,hashMap.get("isChecked"));
-            if ("Remember".equals(hashMap.get("isChecked"))){
-                checkBox.setChecked(true);
-            }
-        }
+        SharedPreferences sharedPreferences = getSharedPreferences("settings",0);
+        editTextName.setText(sharedPreferences.getString("name",""));
+        editTextPasswd.setText(sharedPreferences.getString("passwd",""));
+        checkBox.setChecked(sharedPreferences.getBoolean("isChecked",false));
         button = (Button) findViewById(R.id.button_login);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -48,18 +42,20 @@ public class MainActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(name) || TextUtils.isEmpty(passwd)){
                     Toast.makeText(MainActivity.this,"UserName or Passwd can not be empty",Toast.LENGTH_LONG).show();
                 }
-
+                SharedPreferences sharedPreferences = getSharedPreferences("settings",0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
                 if(checkBox.isChecked()){
-                    Log.i(TAG,"SAVE:" + name + " " + passwd + " " + isChecked);
-                    Userinfo.saveUserInfo(MainActivity.this,name,passwd,isChecked);
-                    Toast.makeText(MainActivity.this,"saved",Toast.LENGTH_LONG).show();
+                        Log.i(TAG,"SAVE:" + name + " " + passwd + " " + isChecked);
+                        editor.putString("name",name);
+                        editor.putString("passwd",passwd);
+                        editor.putBoolean("isChecked",checkBox.isChecked());
+                        Toast.makeText(MainActivity.this,"saved",Toast.LENGTH_LONG).show();
                 }else{
-                    File file = new File(getApplicationContext().getFilesDir(),"info2.txt");
-                        if(file.exists()){
-                            file.delete();
-                            Toast.makeText(MainActivity.this,"deleting",Toast.LENGTH_SHORT).show();
-                        }
+                        editor.putString("name","");
+                        editor.putString("passwd","");
+                        editor.putBoolean("isChecked",checkBox.isChecked());
                     }
+                editor.commit();
                 Toast.makeText(MainActivity.this,"logining",Toast.LENGTH_LONG).show();
             }
         });
