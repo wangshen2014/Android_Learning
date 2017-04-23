@@ -177,34 +177,18 @@ getInfo将用户名、密码，ischecked状态从文件中读出来，读的时�
 
 
 
-# SharedPreference #
 
 
-一般存用户的一些设置项，不会使用文件操作，而是直接使用android已经提供好的一个类SharedPreference
+# 事务 transaction  转账 #
 
-从名字就可以看出是存储用户prefer的一些东西，例如个用户prefer checkbox一直是checked的状态，这样下次登录时，就不用再输入用户名和密码。
+事务就是执行一段逻辑，要么同时成功，要么同时失败。
 
-现在就将之前的文件操作替换为sharedpreference
+	db.beginTransaction();
 
-sharedpreference的操作很简单，就是直接get 然后 editor 然后 commit
+交易里的常见场景是，a给b打钱，其实这个就是将数据库的里a的钱减少，b的值增加。这样完成一个交易。
 
+交易的整个过程以beginTransation()开始。
+首先减少a的余额，然后增加b的余额
 
-    第一步会获取一个实例，并自动生成一个settings.xml文件
-	SharedPreferences sharedPreferences = getSharedPreferences("settings",0);
-	获取edito
-    SharedPreferences.Editor editor = sharedPreferences.edit();
-	放值
-	editor.putString("name",name);
-	editor.putString("passwd",passwd);
-	editor.putBoolean("isChecked",checkBox.isChecked());
-	提交
-    editor.commit();
-
-下面是获取操作，先getsharedpreference，然后使用各种获取函数就okay
-
-    SharedPreferences sharedPreferences = getSharedPreferences("settings",0);
-    String name = sharedPreferences.getString("name","");
-    String passwd = sharedPreferences.getString("passwd","");
-    boolean isChecked = sharedPreferences.getBoolean("isChecked",false);
-
+但是如果在执行完第一步后，出现了错误，那么此交易不成功。a的操作会回滚（将a的钱放回去）
 
