@@ -192,3 +192,47 @@ getInfo将用户名、密码，ischecked状态从文件中读出来，读的时�
 
 但是如果在执行完第一步后，出现了错误，那么此交易不成功。a的操作会回滚（将a的钱放回去）
 
+
+
+# ListView #
+
+首先 此空间需要在layout中定义。
+
+定义好后，listview的数据需要adapter来填充
+
+adapter不要直接继承ListAdapter，因为这样需要重写70+的接口，其实已经有基础的类，实现了。
+所以可以直接使用adapter extends BaseAdapter
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		ListView lv = (ListView) findViewById(R.id.lv);
+		lv.setAdapter(new MyListAdapter());
+		
+		
+	}
+	private class MyListAdapter extends BaseAdapter{
+		@Override
+		public int getCount() {
+			return 1000000000;
+		}
+		@Override
+		public Object getItem(int position) {
+			return null;
+		}
+		@Override
+		public long getItemId(int position) {
+			return 0;
+		}
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			TextView tv ;
+			tv = new TextView(MainActivity.this);
+			tv.setText("hhhh"+position);
+			return tv;
+		}
+	}
+
+实现getCount()和getView方法；
