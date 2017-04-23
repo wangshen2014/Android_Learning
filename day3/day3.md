@@ -132,93 +132,50 @@ getInfo将用户名、密码，ischecked状态从文件中读出来，读的时�
     }
 
 
-# 修复一些bug #
+- 用谷歌封装好的api进行增删改查
 
-- 使用上下文获取文件保存的路径（取代使用硬编码的方式）
-- 
+1、增
 
-What is Context in Android?
+    long insertReslut = db.insert(tableName，null，values);
 
-Putting it simply:
-As the name suggests, it's the context of current state of the application/object. It lets newly-created objects understand what has been going on. Typically you call it to get information regarding another part of your program (activity and package/application).
+因为values要求是一个 key：value的hashmap
 
-You can get the context by invoking getApplicationContext(), getContext(), getBaseContext() or this (when in a class that extends from Context, such as the Application, Activity, Service and IntentService classes).
-
-Typical uses of context:
-
-1.Creating new objects: Creating new views, adapters, listeners:
-
-TextView tv = new TextView(getContext());
-ListAdapter adapter = new SimpleCursorAdapter(getApplicationContext(), ...);
-
-Accessing standard common resources: Services like LAYOUT_INFLATER_SERVICE,
- 
-2.SharedPreferences:
-
-context.getSystemService(LAYOUT_INFLATER_SERVICE)
-
-getApplicationContext().getSharedPreferences(*name*, *mode*);
-
-3.Accessing components implicitly: Regarding content providers, broadcasts, intent
-
-getApplicationContext().getContentResolver().query(uri, ...);
+	ContentValues contentValues = new ContentValues();
+	contentValues.put("name","wangwu");
+	contentValues.put("phone","15855514611");
+	long result = db.insert("info",null,contentValues);
+	Log.i(TAG,"insert " + result + " into table");
 
 
+2、删
 
-例如，我们直接可以通过Context来打开一个文件数据流，而你只要将文件名字和mode，填充就行了。不用care 这个文件存在哪里，或者构造一个文件输出流。
+	int rowAffected = db.delete("info","name=?",new String[]{"wangwu"});
+	Log.i(TAG,"delete " + rowAffected + " from table");
 
-    FileOutputStream fileOutputStream = context.openFileOutput("info2.txt",0);
+3.更新
 
-看下这个函数的说明
-
-Open a private file associated with this Context's application package for writing. Creates the file if it doesn't already exist.
-
-No additional permissions are required for the calling app to read or write the returned file.
-
-Parameters
-name	String: The name of the file to open; can not contain path separators.
-
-mode	int: Operating mode. Use 0 or MODE_PRIVATE for the default operation. Use MODE_APPEND to append to an existing file.
-
-这一句话其实就相当于：
-
-    File file = new File("/data/data/com.example.administrator.login/info.txt");
-    FileOutputStream fileOutputStream = new FileOutputStream(file);
+	ContentValues contentValues = new ContentValues();
+	contentValues.put("phone","14755773233");
+	int rowAffected = db.update("info",contentValues,"name=?",new String[]{"wangwu"});
+	Log.i(TAG,"update " + rowAffected + " from table");
 
 
+4.查找
+根据name 去查phone
 
-同样的复杂的文件读取操作，也可以直接通过context完成输入流的获取：
+	Cursor cursor = db.query("info",new String[]{"phone"},"name=?",name,null,null,null);
+	if (cursor!= null&&cursor.getCount()>0) {
+		while(cursor.moveToNext()){
+//				String name = cursor.getString(1);
+			String phone = cursor.getString(0);
+			Log.i(TAG,"name:"+name[0]+"----"+phone);
+		}
+	}
 
-    FileInputStream fileInputStream = context.openFileInput("info2.txt");
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream))
-
-这两句话就可以代替下面的操作
-
-    File file = new File("/data/data/com.example.administrator.login/info.txt");
-    FileInputStream fileInputStream = new FileInputStream(file);
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-
-
-获取文件，可以将
-
-    File file = new File("/data/data/com.example.administrator.login/info.txt");
-
-替换为
-
-    File file = new File(getApplicationContext().getFilesDir(),"info2.txt");
+优点：由api自己去构建sql语句，有返回值。
+缺点：不够灵活，多表查询
 
 
-
-这是getFileDir的说明
-
-getFilesDir
-
-
-File getFilesDir ()
-
-Returns the absolute path to the directory on the filesystem where files created with openFileOutput(String, int) are stored.
-The returned path may change over time if the calling app is moved to an adopted storage device, so only relative paths should be persisted.
-No additional permissions are required for the calling app to read or write files under the returned path.
 
 # SharedPreference #
 
