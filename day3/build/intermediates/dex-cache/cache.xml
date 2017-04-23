@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Administrator\AndroidStudioProjects\day3\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4dd7c7b950c316596d7f8e8a31eeaf7f203fef8e">
+        <dex dex="C:\Users\Administrator\AndroidStudioProjects\day3\app\build\intermediates\pre-dexed\debug\instant-run_e96f391a9b7e0da1b4f2c061b96172f368cad1fe.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Administrator\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="C:\Users\Administrator\AndroidStudioProjects\day3\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0_4b5a6ed7e9e22e88e5c55e2e8f15ad0f8f4e50c4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Administrator\AndroidStudioProjects\day3\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="7abc7d9c80f1a393e9a5d45cc3ecc982fa3e28ab">
+        <dex dex="C:\Users\Administrator\AndroidStudioProjects\day3\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_73f4a1e4049fa7990265e7328797e136ab294dc3.jar" />
+    </item>
+
+</items>
